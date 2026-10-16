@@ -1,0 +1,7 @@
+@extends('layouts.admin') @section('title','بيانات التصنيف') @section('heading',$category->exists?'تعديل تصنيف':'إضافة تصنيف') @section('content')
+<form method="POST" action="{{$category->exists?route('admin.categories.update',$category):route('admin.categories.store')}}" class="max-w-2xl space-y-4 rounded-2xl bg-white p-6">@csrf @if($category->exists) @method('PUT') @endif
+<div><label for="name" class="mb-1 block font-bold">اسم التصنيف</label><input id="name" name="name" required value="{{old('name',$category->name)}}" class="w-full rounded-xl border-stone-300"></div>
+<div><label for="description" class="mb-1 block font-bold">الوصف</label><textarea id="description" name="description" class="w-full rounded-xl border-stone-300">{{old('description',$category->description)}}</textarea></div>
+<div><label for="sort_order" class="mb-1 block font-bold">الترتيب</label><input id="sort_order" type="number" min="0" name="sort_order" value="{{old('sort_order',$category->sort_order??0)}}" class="w-full rounded-xl border-stone-300"></div>
+<label class="flex gap-2"><input type="checkbox" name="is_active" value="1" @checked(old('is_active',$category->exists?$category->is_active:true))> تصنيف نشط</label><button class="rounded-xl bg-coffee-dark px-5 py-3 text-white">حفظ</button> <a class="underline" href="{{route('admin.categories.index')}}">إلغاء</a></form>
+@endsection
